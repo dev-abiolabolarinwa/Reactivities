@@ -8,9 +8,10 @@ interface IProp {
     activity: IActivity | null;
     createActivity: (activity: IActivity) => void;
     editActivity: (activity: IActivity) => void;
+    submitting: boolean;
 }
 
-const ActivityForm: React.FC<IProp> = ({ setEditMode, activity: initialFormState, createActivity, editActivity }) => {
+const ActivityForm: React.FC<IProp> = ({ setEditMode, activity: initialFormState, createActivity, editActivity, submitting }) => {
 
     const initialiseForm = () => {
         if (initialFormState) {
@@ -89,7 +90,7 @@ const ActivityForm: React.FC<IProp> = ({ setEditMode, activity: initialFormState
                 />
                 <Card.Content extra>
                     <ButtonGroup widths={2}>
-                        <Button basic positive type='submit' content='Submit' />
+                        <Button loading={submitting} basic positive type='submit' content='Submit' />
                         <Button onClick={() => setEditMode(false)} basic negative type='button' content='Cancel' />
                     </ButtonGroup>
                 </Card.Content>
