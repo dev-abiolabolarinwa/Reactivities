@@ -1,18 +1,18 @@
-import React, { useState, FormEvent } from 'react'
+import React, { useState, FormEvent, useContext } from 'react'
 import { Segment, Form, FormInput, FormTextArea, Card, ButtonGroup, Button } from 'semantic-ui-react';
 import { IActivity } from '../../../app/models/activity';
 import {v4 as uuid} from 'uuid';
+import ActivityStore from '../../../app/stores/activityStore';
+import { observer } from 'mobx-react-lite';
 
 interface IProp {
-    setEditMode: (editMode: boolean) => void;
     activity: IActivity | null;
-    createActivity: (activity: IActivity) => void;
-    editActivity: (activity: IActivity) => void;
-    submitting: boolean;
 }
 
-const ActivityForm: React.FC<IProp> = ({ setEditMode, activity: initialFormState, createActivity, editActivity, submitting }) => {
-
+const ActivityForm: React.FC<IProp> = ({ activity: initialFormState }) => {
+    const activityStore = useContext(ActivityStore);
+    const { createActivity, editActivity, submitting, cancelFormOpen } = activityStore;
+    
     const initialiseForm = () => {
         if (initialFormState) {
             return initialFormState;
@@ -91,7 +91,7 @@ const ActivityForm: React.FC<IProp> = ({ setEditMode, activity: initialFormState
                 <Card.Content extra>
                     <ButtonGroup widths={2}>
                         <Button loading={submitting} basic positive type='submit' content='Submit' />
-                        <Button onClick={() => setEditMode(false)} basic negative type='button' content='Cancel' />
+                        <Button onClick={cancelFormOpen} basic negative type='button' content='Cancel' />
                     </ButtonGroup>
                 </Card.Content>
             </Form>
@@ -99,4 +99,4 @@ const ActivityForm: React.FC<IProp> = ({ setEditMode, activity: initialFormState
     )
 }
 
-export default ActivityForm
+export default observer(ActivityForm);
