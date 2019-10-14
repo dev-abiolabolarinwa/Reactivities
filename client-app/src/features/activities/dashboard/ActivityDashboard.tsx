@@ -9,9 +9,9 @@ const ActivityDashboard: React.FC = () => {
     const activityStore = useContext(ActivityStore);
 
     useEffect(() => {
-      activityStore.loadActivities();
+        activityStore.loadActivities();
     }, [activityStore]);
-  
+
     if (activityStore.loadingInitial) return <LoadingComponent content='Loading activities...' />
 
     return (
