@@ -40,7 +40,6 @@ class ActivityStore {
                 });
                 this.loadingInitial = false;
             });
-
         } catch (error) {
             runInAction('loading activities error', () => {
                 this.submitting = false;
@@ -68,11 +67,9 @@ class ActivityStore {
                     this.loadingInitial = false;
 
                 });
-                console.log(error);
+                throw error;
             }
         }
-
-
     }
 
     @action clearActivity = () => {
@@ -135,8 +132,7 @@ class ActivityStore {
                 this.submitting = false;
                 this.target = '';
             });
-            console.log(error);
-
+           console.log(error);
         }
     }
 }
